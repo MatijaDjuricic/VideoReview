@@ -29,7 +29,7 @@ app.use(session({
         expires: 24 * 60 * 60 * 1000,
     }
 }));
-mongoose.connect(url + "/VideoReview", {
+mongoose.connect(url + "/test", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to MongoDB")).catch(console.error);
