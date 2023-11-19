@@ -12,12 +12,25 @@ const url = process.env.URL;
 const backendPort = process.env.BACKEND_PORT;
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
+app.use(cors());
 app.use(cors({
     origin: ['https://videoreview.netlify.app'],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true
 }));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Mehtods",
+        "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+    );
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    next();
+});
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
