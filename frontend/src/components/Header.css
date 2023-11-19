@@ -1,0 +1,38 @@
+.header-nav {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    transition: 0.3s ease-in-out;
+    background-color: #ff0000;
+    justify-content: space-around;
+    align-items: center;
+}
+.header-nav h1, .fixed-header-nav h1, .fa-youtube {
+    color: #fff;
+}
+.logout-btn {
+    background-color: #fff !important;
+    color: #ff0000 !important;
+    outline: none !important;
+    font-weight: 600 !important;
+    border: none !important;
+}
+.username-text {
+    margin: 0;
+    color: white;
+}
+.username-text a {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+.hamburger-btn {
+    background: transparent !important;
+    color: #fff !important;
+    outline: none !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+}

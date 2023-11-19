@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.input-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5rem 25% 2rem 25%;
+}
+.container {
+  display: grid;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: auto;
+}
+.videos-card {
+  width: 18rem;
+  position: relative;
+  padding-bottom: 2rem;
+}
+.vm-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+.single-video {
+  display: flex;
+  justify-content: center;
+}
+.video-card {
+  position: relative;
+  width: 60%;
+  margin: 6rem 0 3rem 0;
+  padding-left: 30px;
+  text-align: center;
+}
+.back-btn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.video-card iframe {
+  margin: 3rem 0 3rem 0;
+  scale: 1.5;
+  border: 3px solid #ff0000;
+  border-radius: 5px;
+}
+.description {
+  margin: 0 5rem 1.25rem 5rem;
+}
+.review-div .card {
+  position: relative;
+  text-align: start;
+  margin-bottom: 1rem;
+  padding-bottom: 1.5rem;
+}
+.single-video-rating {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+}
+.dr-btn {
+  position: absolute;
+  left: 0.25rem;
+  bottom: 0.25rem;
+}
+.sv-a {
+  color: #ff0000;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.not-found {
+  width: 100%;
+  text-align: center;
+  margin-top: 4rem;
+}
+.not-found img {
+  width: 28rem;
+  height: 28rem;
+}
+.no-results {
+  margin: auto;
+  max-width: 25rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+}

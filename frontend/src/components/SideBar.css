@@ -1,0 +1,45 @@
+.review-overlay {
+    position: absolute;
+    display: none;
+    inset: 0;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.review-card:hover .review-overlay {
+    display: block;
+}
+.open-review-btn {
+    position: absolute;
+    margin: auto;
+    inset: 0;
+    width: 8rem;
+    height: 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    background: #ff0000;
+}
+.open-review-btn:hover {
+    color: #ff0000;
+    background: #eaeaea;
+}
+.review-card {
+    padding: 0 !important;
+    margin: 0 4rem 0 0 !important;
+}
+.review-card .card-title {
+    font-size: 1rem !important;
+}
+.review-card .card-text {
+    margin: 0 !important;
+    padding-top: 0.5rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+}
+.offcanvas-body {
+    padding-top: 0 !important;
+}
