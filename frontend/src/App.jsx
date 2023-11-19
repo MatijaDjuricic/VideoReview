@@ -11,7 +11,6 @@ import NotFound from './pages/NotFound';
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import './App.css';
 if (process.env.REACT_APP_NODE_ENV === 'production') disableReactDevTools();
-new Headers('Access-Control-Allow-Origin: *');
 const App = () => {
   axios.defaults.withCredentials = true;
   const URL = import.meta.env.VITE_URL;
