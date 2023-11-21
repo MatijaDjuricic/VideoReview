@@ -21,7 +21,7 @@ app.use(cors({
     credentials: true
 }));
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://videoreview.netlify.app");
+    res.header("Access-Control-Allow-Origin", 'https://videoreview.netlify.app');
     res.header(
         "Access-Control-Allow-Mehtods",
         "GET,HEAD,OPTIONS,POST,PUT,DELETE"

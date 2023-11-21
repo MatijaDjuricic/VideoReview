@@ -7,8 +7,8 @@ import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import './Login.css';
 const Login = () => {
-    const URL = import.meta.env.VITE_URL;
     axios.defaults.withCredentials = true;
+    const URL = import.meta.env.VITE_URL;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
