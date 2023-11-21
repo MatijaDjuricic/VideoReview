@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
@@ -20,7 +21,7 @@ app.use(cors({
     credentials: true
 }));
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "https://videoreview.netlify.app");
     res.header(
         "Access-Control-Allow-Mehtods",
         "GET,HEAD,OPTIONS,POST,PUT,DELETE"
@@ -40,7 +41,10 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         expires: 24 * 60 * 60 * 1000,
-    }
+    },
+    store: new MemoryStore({
+      checkPeriod: 86400000
+    })
 }));
 mongoose.connect(url + "/test", {
     useNewUrlParser: true,
