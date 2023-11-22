@@ -46,7 +46,7 @@ app.use(session({
       checkPeriod: 86400000
     })
 }));
-mongoose.connect(url + "/test", {
+mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to MongoDB")).catch(console.error);
