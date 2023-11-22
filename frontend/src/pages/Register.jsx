@@ -19,7 +19,6 @@ const Register = () => {
     let email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     const Submit = async(e) => {
         e.preventDefault();
-        console.log(email_regex.test(email));
         if (password == confirmPassword && password_regex.test(password) && email_regex.test(email) && name.length > 2) {
             await axios.post(`${URL}/users/register`, {
                 name, email, password
