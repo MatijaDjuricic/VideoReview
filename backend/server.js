@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+mongoose.set("strictQuery", false);
 const cors = require('cors');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
