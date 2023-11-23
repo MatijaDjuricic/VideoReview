@@ -16,8 +16,9 @@ app.use(express.urlencoded({extended: true}));
 app.set('trust proxy', 1);
 app.use(cors());
 app.use(cors({
-    origin: "*",
+    origin: ['https://videoreview.netlify.app/', 'https://videoreview.netlify.app/login', 'https://videoreview.netlify.app/register'],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    credentials: true
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
