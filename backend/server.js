@@ -1,16 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-mongoose.set("strictQuery", false);
+const MemoryStore = require('memorystore')(session);
 const cors = require('cors');
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const User = require('./models/User');
 const Review = require('./models/Review');
 require('dotenv').config();
-const backendPort = process.env.BACKEND_PORT;
+const backendPort = process.env.BACKEND_PORT || 8080;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -25,56 +24,57 @@ app.use((req, res, next) => {
     res.header(
         "Access-Control-Allow-Mehtods",
         "GET,HEAD,OPTIONS,POST,PUT,DELETE"
-    );
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    next();
-});
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({
-    key: "userId",
-    secret: "VideoReviewApp",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 24 * 60 * 60 * 1000,
-    },
-    store: new MemoryStore({
-      checkPeriod: 86400000
-    })
-}));
-mongoose.connect(process.env.URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log("Connected to MongoDB")).catch(console.error);
-app.post('/users/register', async(req, res) => {
-    const {name, email, password} = req.body;
-    bcrypt.hash(password, 10, async (err, hash) => {
-        if (err) throw err;
-        const data = {
-            name: name,
-            email: email,
-            password: hash
-        };
-        const chack = await User.findOne({email: email});
-        if (!chack) {
-            await User.insertMany([data]);
-            res.json(data);
-        } else res.json("exist");
-    });
-});
-app.post('/users/login', async(req, res) => {
-    const {email, password} = req.body;
-    const chack = await User.findOne({email: email});
-    if (chack) {
-        bcrypt.compare(password, chack.password, (error, response) => {
-            if (error) throw error;
-            if (response) {
-                req.session.user = chack;
-                res.json(chack);
+        );
+        res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+            );
+            next();
+        });
+        app.use(cookieParser());
+        app.use(bodyParser.urlencoded({extended: true}));
+        app.use(session({
+            key: "userId",
+            secret: "VideoReviewApp",
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                expires: 24 * 60 * 60 * 1000,
+            },
+            store: new MemoryStore({
+                checkPeriod: 24 * 60 * 60 * 1000
+            })
+        }));
+        mongoose.set("strictQuery", false);
+        mongoose.connect(process.env.URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }).then(() => console.log("Connected to MongoDB")).catch(console.log("error"));
+        app.post('/users/register', async(req, res) => {
+            const {name, email, password} = req.body;
+            bcrypt.hash(password, 10, async (err, hash) => {
+                if (err) throw err;
+                const data = {
+                    name: name,
+                    email: email,
+                    password: hash
+                };
+                const chack = await User.findOne({email: email});
+                if (!chack) {
+                    await User.insertMany([data]);
+                    res.json(data);
+                } else res.json("exist");
+            });
+        });
+        app.post('/users/login', async(req, res) => {
+            const {email, password} = req.body;
+            const chack = await User.findOne({email: email});
+            if (chack) {
+                bcrypt.compare(password, chack.password, (error, response) => {
+                    if (error) throw error;
+                    if (response) {
+                        req.session.user = chack;
+                        res.json(chack);
             } else res.json("notexist");
         });
     } else res.json("notexist");
