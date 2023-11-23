@@ -16,14 +16,9 @@ app.use(express.urlencoded({extended: true}));
 app.set('trust proxy', 1);
 app.use(cors());
 app.use(cors({
-    origin: ['https://videoreview.netlify.app/users/login'],
+    origin: true,
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
-    credentials: true
 }));
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.header('origin') );
-  next();
-});
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
