@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended: true}));
 app.set('trust proxy', 1);
 app.use(cors());
 app.use(cors({
-    origin: true,
+    origin: "*",
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
 }));
 app.use(cookieParser());
