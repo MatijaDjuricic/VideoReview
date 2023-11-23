@@ -16,10 +16,9 @@ app.use(express.urlencoded({extended: true}));
 app.set('trust proxy', 1);
 app.use(cors());
 app.use(cors({
-    origin: '*',
-    optionSuccessStatus: 200,
-    credentials: true,
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
+    origin: ['https://videoreview.netlify.app'],
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    credentials: true
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -39,7 +38,7 @@ mongoose.set("strictQuery", false);
 mongoose.connect(process.env.URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log("Connected to MongoDB")).catch(console.log("error"));
+}).then(() => console.log("Connected to MongoDB")).catch(console.error);
 app.post('/users/register', async(req, res) => {
     const {name, email, password} = req.body;
     bcrypt.hash(password, 10, async (err, hash) => {
