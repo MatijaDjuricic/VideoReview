@@ -1,8 +1,10 @@
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+  from = "/<path-to-access-cors-url>"
+  to = "<cross-origin-url>"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
 [[headers]]
-for = "/*"
-[headers.values]
-Access-Control-Allow-Origin = "/index.html"
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
