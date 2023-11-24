@@ -17,7 +17,7 @@ app.set('trust proxy', 1);
 app.use(cors());
 app.use(cors({
     origin: ['https://videoreview.netlify.app'],
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"]
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));

@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import NotFound from "./NotFound";
 import './Review.css';
 const Review = props => {
-    axios.defaults.withCredentials = false;
+    axios.defaults.withCredentials = true;
     const API_KEY = import.meta.env.VITE_API_KEY;
     const URL = import.meta.env.VITE_URL;
     const [data, setData] = useState([]);
