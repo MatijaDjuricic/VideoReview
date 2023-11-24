@@ -18,7 +18,7 @@ app.use(cors());
 app.use(cors({
     origin: ['https://videoreview.netlify.app', 'https://videoreview.netlify.app/login', 'https://videoreview.netlify.app/register'],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
-    credentials: true
+    credentials: false
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));

@@ -7,7 +7,7 @@ import formatLongText from "../utilities/formatLongText";
 import formatDate from '../utilities/formatDate';
 import NotFound from "./NotFound";
 const SingleVideo = props => {
-  axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = false;
   const API_KEY = import.meta.env.VITE_API_KEY;
   const URL = import.meta.env.VITE_URL;
   const [data, setData] = useState([]);

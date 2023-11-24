@@ -8,7 +8,7 @@ import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import './Profile.css';
 const Profile = props => {
-  axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = false;
   const URL = import.meta.env.VITE_URL;
   const [user, setUser] = useState([]);
   const [name, setName] = useState();

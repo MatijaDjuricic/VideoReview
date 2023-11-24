@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
 import formatDate from '../utilities/formatDate';
 const MainPage = () => {
-  axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = false;
   const API_KEY = import.meta.env.VITE_API_KEY;
   const URL = import.meta.env.VITE_URL;
   const [data, setData] = useState([]);
