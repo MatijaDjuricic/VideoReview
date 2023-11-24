@@ -8,7 +8,6 @@ import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import './Register.css';
 const Register = () => {
-    axios.defaults.withCredentials = false;
     const URL = import.meta.env.VITE_URL;
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
