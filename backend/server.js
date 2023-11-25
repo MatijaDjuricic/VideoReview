@@ -69,7 +69,7 @@ app.post('/users/login', (req, res) => {
         });
     } else res.json("notexist");
 });
-app.get('/users/logged', (req, res) => {
+app.get('/users/logged', async(req, res) => {
     if (req.session.user) {
         return res.json({loggedIn: true, user: req.session.user});
     } else return res.json({loggedIn: false});

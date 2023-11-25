@@ -12,9 +12,9 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const Submit = e => {
+    const Submit = async(e) => {
         e.preventDefault();
-        axios.post(`${URL}/users/logged`, {
+        await axios.post(`${URL}/users/logged`, {
             email, password
         }).then(response => {
             if (response.data != 'notexist') {
