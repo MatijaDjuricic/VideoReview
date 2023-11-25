@@ -86,7 +86,7 @@ const SingleVideo = props => {
                     {
                       videoReviewed ?
                       <>
-                        <Button variant="secondary">Reviewed</Button><hr/>
+                        <Button style={{cursor: 'not-allowed'}} variant="secondary">Reviewed</Button><hr/>
                       </>
                       :
                       <>
