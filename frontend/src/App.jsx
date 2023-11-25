@@ -18,8 +18,8 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const getUrlEndpoint = location => location.split('/')[2];
-  const chackAuth = async() => {
-    await axios.get(`${URL}/users/logged`).then(response => {
+  useEffect(() => {
+    axios.get(`${URL}/users/logged`).then(response => {
       console.log(response.data.user)
       if (response.data.loggedIn) {
         setLoginStatus(response.data.user);
@@ -34,9 +34,6 @@ const App = () => {
         navigate('/login');
       }
     });
-  }
-  useEffect(() => {
-    chackAuth();
   },[]);
   return (
     <div className='App'>
