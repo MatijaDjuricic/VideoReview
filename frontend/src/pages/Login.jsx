@@ -14,7 +14,7 @@ const Login = () => {
     const navigate = useNavigate();
     const Submit = async(e) => {
         e.preventDefault();
-        await axios.post(`${URL}/users/login`, {
+        await axios.post(`${URL}/users/logged`, {
             email, password
         }).then(response => {
             if (response.data != 'notexist') {

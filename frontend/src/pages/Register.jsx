@@ -26,7 +26,7 @@ const Register = () => {
                 if (response.data == 'exist') {
                     navigate('/register')
                 } else if (response.data != 'exist') {
-                    axios.post(`${URL}/users/login`, {
+                    axios.post(`${URL}/users/logged`, {
                         email, password
                     }).then(response => {
                         if (response.data) {
