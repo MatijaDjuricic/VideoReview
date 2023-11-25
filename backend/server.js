@@ -64,6 +64,7 @@ app.post('/users/login', async(req, res) => {
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
             if (response) {
+                console.log(chack)
                 req.session.user = chack;
                 res.json(chack);
             } else res.json("notexist");
