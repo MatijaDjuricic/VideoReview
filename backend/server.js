@@ -65,6 +65,7 @@ app.post('/users/login', async(req, res) => {
             if (error) throw error;
             if (response) {
                 req.session.user = chack;
+                console.log(chack)
                 res.json(chack);
             } else res.json("notexist");
         });
