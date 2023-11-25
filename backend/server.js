@@ -77,8 +77,8 @@ app.post('/users/login', async(req, res) => {
     } else res.json("notexist");
 });
 app.get('/users/logged', async(req, res) => {
-    if (req.session.user) {
-        return res.json({loggedIn: true, user: req.session.user});
+    if (initialUser) {
+        return res.json({loggedIn: true, user: initialUser});
     } else return res.json({loggedIn: false, user: initialUser});
 });
 app.get('/users/logout', async(req, res) => {
