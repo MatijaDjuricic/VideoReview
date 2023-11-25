@@ -60,10 +60,16 @@ app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
     const chack = await User.findOne({email: email});
     if (chack) {
-        req.session.user = chack;
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
             if (response) {
+                res.cookie('userId', chack._id, {
+                    maxAge: 24 * 60 * 60 * 1000, // Cookie expiration time (in milliseconds)
+                    httpOnly: true, // Ensures the cookie is accessible only through HTTP requests
+                    sameSite: 'strict', // Restricts cookie to same-site requests
+                    secure: true, // Send the cookie only over HTTPS in production
+                });
+                req.session.user = chack;
                 res.json(chack);
             } else res.json("notexist");
         });
