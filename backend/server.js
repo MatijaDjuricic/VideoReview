@@ -28,7 +28,6 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: true,
-        httpOnly: false,
         sameSite: 'strict',
         maxAge: 24 * 60 * 60 * 1000
     },
@@ -72,7 +71,7 @@ app.post('/users/login', async(req, res) => {
     } else res.json("notexist");
 });
 app.get('/users/logged', async(req, res) => {
-    console.log(req.session.user);
+    console.log(req.session.user)
     if (req.session.user) {
         return res.json({loggedIn: true, user: req.session.user});
     } else return res.json({loggedIn: false});

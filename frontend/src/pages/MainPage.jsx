@@ -22,6 +22,7 @@ const MainPage = () => {
   }
   useEffect(() => {
     axios.get(`${URL}/users/logged`).then(response => {
+      console.log(response.data.user)
       if (response.data.loggedIn) {
         setLoginStatus(response.data.user);
       }});
