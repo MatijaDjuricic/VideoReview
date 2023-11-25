@@ -20,15 +20,11 @@ const MainPage = () => {
   const viewMore = id => {
     navigate(`/video/${id}`);
   }
-  const getUser = async() => {
-    await axios.get(`${URL}/users/logged`).then(response => {
+  useEffect(() => {
+    axios.get(`${URL}/users/logged`).then(response => {
       if (response.data.loggedIn) {
         setLoginStatus(response.data.user);
-      }
-    });
-  }
-  useEffect(() => {
-    getUser();
+      }});
   },[]);
   return (
     <>
