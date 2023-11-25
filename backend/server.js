@@ -64,13 +64,13 @@ app.post('/users/login', async(req, res) => {
             if (error) throw error;
             if (response) {
                 req.session.user = chack;
+                console.log(req.session.user);
                 res.json(chack);
             } else res.json("notexist");
         });
     } else res.json("notexist");
 });
 app.get('/users/logged', async(req, res) => {
-    await req.session.user;
     if (req.session.user) {
         return res.json({loggedIn: true, user: req.session.user});
     } else return res.json({loggedIn: false});
