@@ -56,9 +56,9 @@ app.post('/users/register', async(req, res) => {
         } else res.json("exist");
     });
 });
-app.post('/users/login', async(req, res) => {
+app.post('/users/login', (req, res) => {
     const {email, password} = req.body;
-    const chack = await User.findOne({email: email});
+    const chack = User.findOne({email: email});
     if (chack) {
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
@@ -69,8 +69,8 @@ app.post('/users/login', async(req, res) => {
         });
     } else res.json("notexist");
 });
-app.get('/users/logged', async(req, res) => {
-    if (await req.session.user) {
+app.get('/users/logged', (req, res) => {
+    if (req.session.user) {
         return res.json({loggedIn: true, user: req.session.user});
     } else return res.json({loggedIn: false});
 });
