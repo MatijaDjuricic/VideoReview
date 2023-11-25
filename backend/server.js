@@ -27,7 +27,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 24 * 60 * 60 * 1000,
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60 * 1000
     },
     store: new MemoryStore({
         checkPeriod: 24 * 60 * 60 * 1000
