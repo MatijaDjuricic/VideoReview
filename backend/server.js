@@ -22,16 +22,17 @@ app.use(cors({
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
-    key: "userId",
+    name: "userId",
     secret: "VideoReviewApp",
     resave: false,
     saveUninitialized: false,
+    store: new MemoryStore(),
     cookie: {
         maxAge: 24 * 60 * 60 * 1000,
         secure: true,
-        sameSite: 'strict'
-    },
-    store: new MemoryStore()
+        httpOnly: true,
+        sameSite:"none"
+    }
 }));
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.URI, {
