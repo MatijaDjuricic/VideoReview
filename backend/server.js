@@ -35,13 +35,6 @@ app.use(session({
         checkPeriod: 24 * 60 * 60 * 1000
     })
 }));
-const initialUser = {
-    "_id": "655deb260e463eb48ace278e",
-    "name": "Matija Djuricic",
-    "email": "matija@gmail.com",
-    "password": "$2a$10$HbV3Nh5k1K9.WC0o77mVeOtY85hIUO9sJkXtAKwtDUBqoYXxQ/HD2",
-    "__v": 0
-}
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.URI, {
     useNewUrlParser: true,
@@ -67,19 +60,19 @@ app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
     const chack = await User.findOne({email: email});
     if (chack) {
+        req.session.user = chack;
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
             if (response) {
-                req.session.user = chack;
                 res.json(chack);
             } else res.json("notexist");
         });
     } else res.json("notexist");
 });
 app.get('/users/logged', async(req, res) => {
-    if (initialUser) {
-        return res.json({loggedIn: true, user: initialUser});
-    } else return res.json({loggedIn: false, user: initialUser});
+    if (req.session.user) {
+        return res.json({loggedIn: true, user: req.session.user});
+    } else return res.json({loggedIn: false });
 });
 app.get('/users/logout', async(req, res) => {
     req.session.destroy();
