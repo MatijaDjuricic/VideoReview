@@ -11,9 +11,9 @@ const Review = require('./models/Review');
 require('dotenv').config();
 const backendPort = process.env.BACKEND_PORT || 8080;
 const app = express();
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.set('trust proxy', 1);
 app.use(cors({
     origin: "https://videoreview.netlify.app",
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
@@ -22,16 +22,19 @@ app.use(cors({
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
+    key: "userId",
     name: "userId",
     secret: "VideoReviewApp",
     resave: false,
     saveUninitialized: false,
-    store: new MemoryStore(),
+    store: new MemoryStore({
+        checkPeriod: 24 * 60 * 60 * 1000
+    }),
     cookie: {
         maxAge: 24 * 60 * 60 * 1000,
         secure: true,
         httpOnly: true,
-        sameSite:"none"
+        sameSite: "none"
     }
 }));
 mongoose.set("strictQuery", false);

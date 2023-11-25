@@ -60,11 +60,11 @@ const Register = () => {
                             </div>
                             <div className="input">
                                 <img src={password_icon} alt="" />
-                                <input type="text" name="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required/>
+                                <input type="password" name="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required/>
                             </div>
                             <div className="input">
                                 <img src={password_icon} alt="" />
-                                <input type="text" name="confirm_password" placeholder="Confirm your password" onChange={(e) => setConfirmPassword(e.target.value)} required/>
+                                <input type="password" name="confirm_password" placeholder="Confirm your password" onChange={(e) => setConfirmPassword(e.target.value)} required/>
                             </div>
                         </div>
                         <div className="login-wrapper">Alrady have an account? <span><a href="/login">Login</a></span></div>

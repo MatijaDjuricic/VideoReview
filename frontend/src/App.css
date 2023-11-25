@@ -82,6 +82,12 @@
   width: 28rem;
   height: 28rem;
 }
+.no-search-results {
+  margin: 4rem auto;
+  max-width: 25rem;
+  text-align: center;
+  font-size: 1.25rem;
+}
 .no-results {
   margin: auto;
   max-width: 25rem;

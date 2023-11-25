@@ -52,7 +52,7 @@ const MainPage = () => {
               </Card.Body>
             </Card>
           )) :
-          <p className='no-results'><strong>No search results yet</strong>,<br />please search to get results</p>
+          <p className='no-search-results'><strong>No search results yet</strong>,<br />please search to get results</p>
         }
       </div>
     </>
