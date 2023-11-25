@@ -21,7 +21,7 @@ const SingleVideo = props => {
     await fetch(API).then(res => res.json()).then(data => setData(data.items)).catch(err => console.error(err));
   }
   const getReview = () => {
-    axios.get(`${URL}/users/login`).then(response => {
+    axios.get(`${URL}/users/logged`).then(response => {
       if (response.data.loggedIn) {
         setLoginStatus(response.data.user);
         const user_id = response.data.user._id;

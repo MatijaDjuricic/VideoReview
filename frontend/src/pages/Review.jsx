@@ -39,7 +39,7 @@ const Review = props => {
     }
     useEffect(() => {
       getSingleVideo();
-      axios.get(`${URL}/users/login`).then(response => {
+      axios.get(`${URL}/users/logged`).then(response => {
         if (response.data.loggedIn) {
             setLoginStatus(response.data.user);
         }});
