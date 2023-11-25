@@ -27,13 +27,11 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
         secure: true,
-        sameSite: 'strict',
-        maxAge: 24 * 60 * 60 * 1000
+        sameSite: 'strict'
     },
-    store: new MemoryStore({
-        checkPeriod: 24 * 60 * 60 * 1000
-    })
+    store: new MemoryStore()
 }));
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.URI, {
@@ -63,12 +61,6 @@ app.post('/users/login', async(req, res) => {
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
             if (response) {
-                res.cookie('userId', chack._id, {
-                    maxAge: 24 * 60 * 60 * 1000, // Cookie expiration time (in milliseconds)
-                    httpOnly: true, // Ensures the cookie is accessible only through HTTP requests
-                    sameSite: 'strict', // Restricts cookie to same-site requests
-                    secure: true, // Send the cookie only over HTTPS in production
-                });
                 req.session.user = chack;
                 res.json(chack);
             } else res.json("notexist");
@@ -78,7 +70,7 @@ app.post('/users/login', async(req, res) => {
 app.get('/users/logged', async(req, res) => {
     if (req.session.user) {
         return res.json({loggedIn: true, user: req.session.user});
-    } else return res.json({loggedIn: false });
+    } else return res.json({loggedIn: false});
 });
 app.get('/users/logout', async(req, res) => {
     req.session.destroy();
