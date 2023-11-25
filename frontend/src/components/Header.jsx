@@ -22,7 +22,7 @@ const Header = props => {
             <i className="fa-brands fa-youtube" ></i>
             <i className="fa-brands fa-youtube" ></i>
             <i className="fa-brands fa-youtube" ></i>
-            <h1 onClick={() => navigate('/')}>Video Review</h1>
+            <h1 style={{cursor: 'pointer'}} onClick={() => navigate('/')}>Video Review</h1>
             {
                 props.name ?
                 <>
