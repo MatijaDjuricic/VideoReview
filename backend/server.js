@@ -60,7 +60,6 @@ app.post('/users/register', async(req, res) => {
 app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
     const chack = await User.findOne({email: email});
-    console.log(chack);
     if (chack) {
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
@@ -72,6 +71,7 @@ app.post('/users/login', async(req, res) => {
     } else res.json("notexist");
 });
 app.get('/users/logged', async(req, res) => {
+    console.log(req.session.user);
     if (req.session.user) {
         return res.json({loggedIn: true, user: req.session.user});
     } else return res.json({loggedIn: false});
