@@ -60,12 +60,12 @@ app.post('/users/register', async(req, res) => {
 app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
     const chack = await User.findOne({email: email});
+    console.log(chack);
     if (chack) {
         bcrypt.compare(password, chack.password, (error, response) => {
             if (error) throw error;
             if (response) {
                 req.session.user = chack;
-                console.log(chack)
                 res.json(chack);
             } else res.json("notexist");
         });
