@@ -26,6 +26,7 @@ app.use(session({
     secret: "VideoReviewApp",
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     store: new MemoryStore({
         checkPeriod: 24 * 60 * 60 * 1000
     }),
