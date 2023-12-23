@@ -12,7 +12,7 @@ app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-    origin: "https://videoreview.netlify.app",
+    origin: ["https://videoreview.netlify.app"],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
     credentials: true
 }));
