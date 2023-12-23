@@ -5,6 +5,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import formatLongText from "../utilities/formatLongText";
 import formatDate from '../utilities/formatDate';
+import getCookie from '../utilities/getCookie';
 import NotFound from "./NotFound";
 const SingleVideo = props => {
   axios.defaults.withCredentials = true;
@@ -21,10 +22,13 @@ const SingleVideo = props => {
     await fetch(API).then(res => res.json()).then(data => setData(data.items)).catch(err => console.error(err));
   }
   const getReview = () => {
-    axios.get(`${URL}/users/logged`).then(response => {
-      if (response.data.loggedIn) {
-        setLoginStatus(response.data.user);
-        const user_id = response.data.user._id;
+    let session_cookie = getCookie("userIn");
+      axios.get(`${URL}/users/check`, {
+        session_cookie
+      }).then(response => {
+      if (response.data) {
+        setLoginStatus(response.data);
+        const user_id = response.data._id;
         axios.get(`${URL}/reviews/review/${props.id}`).then(response => {
           if (response.data.review) {
             setReview(response.data.review.sort((a, b) => {
@@ -86,7 +90,7 @@ const SingleVideo = props => {
                     {
                       videoReviewed ?
                       <>
-                        <Button style={{cursor: 'not-allowed'}} variant="secondary">Reviewed</Button><hr/>
+                        <Button variant="secondary">Reviewed</Button><hr/>
                       </>
                       :
                       <>

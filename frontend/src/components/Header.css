@@ -13,6 +13,9 @@
 .header-nav h1, .fixed-header-nav h1, .fa-youtube {
     color: #fff;
 }
+.h1-link {
+    text-decoration: none;
+}
 .logout-btn {
     background-color: #fff !important;
     color: #ff0000 !important;

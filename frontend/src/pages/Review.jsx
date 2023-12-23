@@ -3,6 +3,7 @@ import { Card, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
+import getCookie from '../utilities/getCookie';
 import NotFound from "./NotFound";
 import './Review.css';
 const Review = props => {
@@ -39,10 +40,14 @@ const Review = props => {
     }
     useEffect(() => {
       getSingleVideo();
-      axios.get(`${URL}/users/logged`).then(response => {
-        if (response.data.loggedIn) {
-            setLoginStatus(response.data.user);
-        }});
+      getSingleVideo();
+      let session_cookie = getCookie("userIn");
+      axios.get(`${URL}/users/check`, {
+        session_cookie
+      }).then(response => {
+        if (response.data) {
+            setLoginStatus(response.data);
+        }})
     },[]);
     return (
         <>

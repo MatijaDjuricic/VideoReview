@@ -5,6 +5,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
 import formatDate from '../utilities/formatDate';
+import getCookie from '../utilities/getCookie';
 const MainPage = () => {
   axios.defaults.withCredentials = true;
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -21,10 +22,14 @@ const MainPage = () => {
     navigate(`/video/${id}`);
   }
   useEffect(() => {
-    axios.get(`${URL}/users/logged`).then(response => {
-      if (response.data.loggedIn) {
-        setLoginStatus(response.data.user);
-      }});
+      let session_cookie = getCookie("userIn");
+      if (session_cookie) {
+        axios.get(`${URL}/users/check`, {
+          session_cookie
+        }).then(response => {
+          if (response.data) setLoginStatus(response.data);
+        });
+      } else navigate('/login')
   },[]);
   return (
     <>

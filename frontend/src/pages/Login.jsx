@@ -3,15 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { Row, Form } from 'react-bootstrap';
 import Header from '../components/Header';
 import axios from 'axios';
+import setCookie from '../utilities/setCookie';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import './Login.css';
 const Login = () => {
-    axios.defaults.withCredentials = true;
     const URL = import.meta.env.VITE_URL;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [eye, setEye] = useState(false);
     const navigate = useNavigate();
+    const toggleEye = e => {
+        e.preventDefault();
+        setEye(eye => !eye);
+    }
     const Submit = async(e) => {
         e.preventDefault();
         await axios.post(`${URL}/users/login`, {
@@ -19,6 +24,7 @@ const Login = () => {
         }).then(response => {
             if (response.data != 'notexist') {
                 navigate('/', {state: {id: email}});
+                setCookie('userIn', response.data.session_cookie);
             } else if (response.data == 'notexist') {
                 navigate('/login')
             }
@@ -41,7 +47,8 @@ const Login = () => {
                             </div>
                             <div className="input">
                                 <img src={password_icon} alt="" />
-                                <input type="password" name="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required/>
+                                <input type={!eye ? 'password' : 'text'} name="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required/>
+                                <button className='eye' id='eye' onClick={(e) => toggleEye(e)}>{!eye ? <i className="fa-solid fa-eye" id='eye'></i> : <i className="fa-solid fa-eye-slash" id='eye'></i>}</button>
                             </div>
                         </div>
                         <div className="register-wrapper">Don't have an account? <span><a href="/register">Register</a></span></div>
