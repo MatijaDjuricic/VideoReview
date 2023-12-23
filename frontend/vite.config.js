@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': "https://videoreview.netlify.app"
+      '/api': "https://video-review-app.onrender.com"
     }
   },
   plugins: [react()],
