@@ -46,10 +46,10 @@ app.post('/users/login', async(req, res) => {
         data = { 
             session_cookie: generatedCookie
         }
-        bcrypt.compare(password, check.password, async(error, response) => {
+        bcrypt.compare(password, check.password, (error, response) => {
             if (error) throw error;
             if (response) {
-                const user = await User.findByIdAndUpdate({_id: check.id}, data, {new: true});
+                const user = User.findByIdAndUpdate({_id: check.id}, data, {new: true});
                 res.json(user);
             } else res.json("notexist");
         });
