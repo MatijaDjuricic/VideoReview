@@ -24,7 +24,7 @@ mongoose.connect(process.env.URI, {
 }).then(() => console.log("Connected to MongoDB")).catch(console.error);
 app.post('/users/register', async(req, res) => {
     const {name, email, password} = req.body;
-    bcrypt.hash(password, 10, async (err, hash) => {
+    bcrypt.hash(password, 10, async(err, hash) => {
         const chack = await User.findOne({email: email});
         if (err) throw err;
         const data = {
@@ -41,8 +41,8 @@ app.post('/users/register', async(req, res) => {
 app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
     const check = await User.findOne({email: email});
-    var generatedCookie = btoa(Math.floor(Date.now() / 1000) + '.' + check._id + '.' + check.password);
     if (check) {
+        var generatedCookie = btoa(Math.floor(Date.now() / 1000) + '.' + check._id + '.' + check.password);
         data = { 
             session_cookie: generatedCookie
         }
