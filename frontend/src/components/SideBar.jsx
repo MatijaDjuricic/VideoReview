@@ -1,17 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Offcanvas, Stack, Card } from 'react-bootstrap';
 import axios from 'axios';
 import formatDate from '../utilities/formatDate';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import './SideBar.css';
 const SideBar = ({ isOpen, closeSideBar, user_id }) => {
   axios.defaults.withCredentials = true;
   const URL = import.meta.env.VITE_URL;
   const [videosData, setVideosData] = useState([]);
+  const pdfRef = useRef();
   const getReviews = async() => {
     await axios.get(`${URL}/reviews/user/${user_id}`).then(response => {
       if (response.data.review) {
         setVideosData(response.data.review.sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
       }
+    });
+  }
+  const downloadPDF = () => {
+    const input = pdfRef.current;
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4', true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(imgData, 'PNG', imgX, imgY, (imgWidth * ratio) - imgWidth / 10, (imgWidth * ratio)) - imgWidth / 10;
+      pdf.save("reviews.pdf");
     });
   }
   useEffect(() => {
@@ -21,9 +40,10 @@ const SideBar = ({ isOpen, closeSideBar, user_id }) => {
     <Offcanvas show={isOpen} onHide={closeSideBar} placement="end">
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Your Reviews</Offcanvas.Title>
+        { videosData.length != 0 ? <button className='download-btn' onClick={downloadPDF}>Download PDF</button> : null }
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <Stack gap={3}>
+        <Stack ref={pdfRef} gap={3}>
           {
             videosData.length != 0 ?
             videosData.map(review => (

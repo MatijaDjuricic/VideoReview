@@ -27,6 +27,22 @@
     color: #ff0000;
     background: #eaeaea;
 }
+.download-btn {
+    width: 8rem;
+    height: 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    background: #ff0000;
+}
+.download-btn:hover {
+    color: #ff0000;
+    background: #fff;
+}
 .review-card {
     padding: 0 !important;
     margin: 0 4rem 0 0 !important;

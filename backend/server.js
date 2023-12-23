@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
-const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const User = require('./models/User');
@@ -19,24 +16,7 @@ app.use(cors({
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
     credentials: true
 }));
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({
-    name: "userId",
-    secret: "VideoReviewApp",
-    resave: false,
-    saveUninitialized: false,
-    proxy: true,
-    store: new MemoryStore({
-        checkPeriod: 24 * 60 * 60 * 1000
-    }),
-    cookie: {
-        maxAge: 24 * 60 * 60 * 1000,
-        secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-        sameSite: process.env.NODE_ENV === "production" ? "none" : true,
-    }
-}));
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.URI, {
     useNewUrlParser: true,
@@ -45,13 +25,13 @@ mongoose.connect(process.env.URI, {
 app.post('/users/register', async(req, res) => {
     const {name, email, password} = req.body;
     bcrypt.hash(password, 10, async (err, hash) => {
+        const chack = await User.findOne({email: email});
         if (err) throw err;
         const data = {
             name: name,
             email: email,
-            password: hash
+            password: hash,
         };
-        const chack = await User.findOne({email: email});
         if (!chack) {
             await User.insertMany([data]);
             res.json(data);
@@ -60,26 +40,26 @@ app.post('/users/register', async(req, res) => {
 });
 app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
-    const chack = await User.findOne({email: email});
-    if (chack) {
-        bcrypt.compare(password, chack.password, (error, response) => {
+    const check = await User.findOne({email: email});
+    var generatedCookie = btoa(Math.floor(Date.now() / 1000) + '.' + check._id + '.' + check.password);
+    if (check) {
+        data = { 
+            session_cookie: generatedCookie
+        }
+        bcrypt.compare(password, check.password, async(error, response) => {
             if (error) throw error;
             if (response) {
-                req.session.user = chack;
-                res.json(chack);
+                const user = await User.findByIdAndUpdate({_id: check.id}, data, {new: true});
+                res.json(user);
             } else res.json("notexist");
         });
     } else res.json("notexist");
 });
-app.get('/users/logged', async(req, res) => {
-    if (req.session.user) {
-        return res.json({loggedIn: true, user: req.session.user});
-    } else return res.json({loggedIn: false});
-});
-app.get('/users/logout', async(req, res) => {
-    req.session.destroy();
-    res.clearCookie('userId');
-    return res.json({loggedOut: true});
+app.get('/users/check', async(req, res) => {
+    const {session_cookie} = req.body;
+    const check = await User.findOne(session_cookie);
+    if (check) res.json(check);
+    else res.json("notexist");
 });
 app.get('/users/user/:id', async(req, res) => {
     const user = await User.findById(req.params.id);

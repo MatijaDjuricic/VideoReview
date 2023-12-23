@@ -85,3 +85,12 @@
     color: #ff0000;
     background: #eaeaea;
 }
+.eye {
+    margin: 0 20px 0 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.eye i {
+    color: #797979;
+}

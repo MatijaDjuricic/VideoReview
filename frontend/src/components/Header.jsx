@@ -2,27 +2,29 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import removeCookie from '../utilities/removeCookie';
 import SideBar from './SideBar';
 import './Header.css';
+import getCookie from '../utilities/getCookie';
 const Header = props => {
     axios.defaults.withCredentials = true;
-    const URL = import.meta.env.VITE_URL;
     const [isOpen, setIsOpen] = useState(false);
     const openSideBar = () => setIsOpen(true);
     const closeSideBar = () => setIsOpen(false);
     const navigate = useNavigate();
     const logOut = async e => {
         e.preventDefault();
-        await axios.get(`${URL}/users/logout`).then(res => {
-            if (res.data.loggedOut) navigate('/login');
-        });
+        if (getCookie("userIn")) {
+            removeCookie("userIn")
+            navigate('/login');
+        };
     }
     return (
         <div className="header-nav" >
             <i className="fa-brands fa-youtube" ></i>
             <i className="fa-brands fa-youtube" ></i>
             <i className="fa-brands fa-youtube" ></i>
-            <h1 style={{cursor: 'pointer'}} onClick={() => navigate('/')}>Video Review</h1>
+            <a href="/" className='h1-link'><h1>Video Review</h1></a>
             {
                 props.name ?
                 <>

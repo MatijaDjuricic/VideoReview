@@ -8,31 +8,35 @@ import SingleVideo from './pages/SingleVideo';
 import Review from './pages/Review';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
-import { disableReactDevTools } from "@fvilers/disable-react-devtools";
+import getCookie from './utilities/getCookie';
 import './App.css';
-if (process.env.REACT_APP_NODE_ENV === 'production') disableReactDevTools();
 const App = () => {
-  axios.defaults.withCredentials = false;
+  axios.defaults.withCredentials = true;
   const URL = import.meta.env.VITE_URL;
   const [loginStatus, setLoginStatus] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const getUrlEndpoint = location => location.split('/')[2];
   useEffect(() => {
-    axios.get(`${URL}/users/logged`).then(response => {
-      if (response.data.loggedIn) {
-        setLoginStatus(response.data.user);
-        if (location.pathname == '/login' || location.pathname == '/register') {
-          navigate('/');
+    let session_cookie = getCookie("userIn");
+    if (session_cookie) {
+      axios.get(`${URL}/users/check`, {
+        session_cookie
+      }).then(response => {
+        if (response.data) {
+          setLoginStatus(response.data);
+          if (location.pathname == '/login' || location.pathname == '/register') {
+            navigate('/');
+          }
         }
-      } else if (location.pathname == '/login') {
-        navigate('/login');
-      } else if (location.pathname == '/register') {
-        navigate('/register');
-      } else {
-        navigate('/login');
-      }
-    });
+      });
+    } else if (location.pathname == '/login') {
+      navigate('/login');
+    } else if (location.pathname == '/register') {
+      navigate('/register');
+    } else {
+      navigate('/login');
+    }
   },[]);
   return (
     <div className='App'>
