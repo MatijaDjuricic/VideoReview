@@ -40,24 +40,20 @@ app.post('/users/register', async(req, res) => {
 });
 app.post('/users/login', async(req, res) => {
     const {email, password} = req.body;
-    try {
-        const check = await User.findOne({email: email});
-        if (check) {
-            var generatedCookie = btoa(Math.floor(Date.now() / 1000) + '.' + check._id + '.' + check.password);
-            data = { 
-                session_cookie: generatedCookie
-            }
-            bcrypt.compare(password, check.password, async(err, response) => {
-                if (err) throw err;
-                if (response) {
-                    const user = await User.findByIdAndUpdate({_id: check.id}, data, {new: true});
-                    res.json(user);
-                } else res.json("notexist");
-            });
-        } else res.json("notexist");
-    } catch (err) {
-        throw err;
-    }
+    const check = await User.findOne({email: email});
+    if (check) {
+        var generatedCookie = Buffer.from(Math.floor(Date.now() / 1000) + '.' + check._id + '.' + check.password).toString('base64');
+        data = { 
+            session_cookie: generatedCookie
+        }
+        bcrypt.compare(password, check.password, async(err, response) => {
+            if (err) throw err;
+            if (response) {
+                const user = await User.findByIdAndUpdate({_id: check.id}, data, {new: true});
+                res.json(user);
+            } else res.json("notexist");
+        });
+    } else res.json("notexist");
 });
 app.get('/users/check', async(req, res) => {
     const {session_cookie} = req.body;
