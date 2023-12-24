@@ -17,8 +17,8 @@ const Register = () => {
     const [eye1, setEye1] = useState(false);
     const [eye2, setEye2] = useState(false);
     const navigate = useNavigate();
-    var password_regex = /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{5,}).*)$/;
-    var email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let password_regex = /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{5,}).*)$/;
+    let email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     const toggleEye = e => {
         e.preventDefault();
         if (e.target.id == 'eye1') setEye1(eye => !eye);
