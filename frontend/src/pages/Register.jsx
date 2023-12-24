@@ -17,8 +17,8 @@ const Register = () => {
     const [eye1, setEye1] = useState(false);
     const [eye2, setEye2] = useState(false);
     const navigate = useNavigate();
-    let password_regex = /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{5,}).*)$/;
-    let email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    var password_regex = /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{5,}).*)$/;
+    var email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     const toggleEye = e => {
         e.preventDefault();
         if (e.target.id == 'eye1') setEye1(eye => !eye);
@@ -26,19 +26,21 @@ const Register = () => {
     }
     const Submit = async(e) => {
         e.preventDefault();
-        console.log(email_regex.test(email));
-        if (password == confirmPassword && password_regex.test(password) && email_regex.test(email) && name.length > 2) {
+        let Name = name.trim();
+        let Email = email.trim();
+        let Password = password.trim();
+        let ConfirmPassword = confirmPassword.trim();
+        if (Password == ConfirmPassword && password_regex.test(Password) && email_regex.test(Email) && Name.length > 2) {
             await axios.post(`${URL}/users/register`, {
-                name, email, password
+                Name, Email, Password
             }).then(response => {
                 if (response.data == 'exist') {
                     navigate('/register')
                 } else if (response.data != 'exist') {
                     axios.post(`${URL}/users/login`, {
-                        email, password
+                        Email, Password
                     }).then(response => {
                         if (response.data) {
-                            console.log(response.data);
                             setCookie('userIn', response.data.session_cookie);
                             navigate('/', {state: {id: email}});
                         }

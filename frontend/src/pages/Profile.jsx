@@ -24,12 +24,16 @@ const Profile = props => {
     if (e.target.id == 'eye2') setEye2(eye => !eye);
   }
   const Submit = async(e) => {
-      e.preventDefault();
-    if (name == '' || name === undefined) setName(user.name);
-    if (email == '' || email === undefined) setEmail(user.email);
-    if ((password == confirmPassword) && password !== undefined && password != '') {
+    e.preventDefault();
+    let Name = name.trim();
+    let Email = email.trim();
+    let Password = password.trim();
+    let ConfirmPassword = confirmPassword.trim();
+    if (Name == '' || Name === undefined) setName(user.name);
+    if (Email == '' || Email === undefined) setEmail(user.email);
+    if ((Password == ConfirmPassword) && Password !== undefined && Password != '') {
         axios.patch(`${URL}/users/user/edit/${props.id}`, {
-            name, email, password
+            Name, Email, Password
         }).then(response => {
             if (response.data != 'notexist') {
                 navigate('/');

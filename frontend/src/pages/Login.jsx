@@ -19,8 +19,10 @@ const Login = () => {
     }
     const Submit = async(e) => {
         e.preventDefault();
+        let Email = email.trim();
+        let Password = password.trim();
         await axios.post(`${URL}/users/login`, {
-            email, password
+            Email, Password
         }).then(response => {
             if (response.data != 'notexist') {
                 navigate('/', {state: {id: email}});
