@@ -32,13 +32,13 @@ const Register = () => {
         let ConfirmPassword = confirmPassword.trim();
         if (Password == ConfirmPassword && password_regex.test(Password) && email_regex.test(Email) && Name.length > 2) {
             await axios.post(`${URL}/users/register`, {
-                Name, Email, Password
+                email: Name, email: Email, password: Password
             }).then(response => {
                 if (response.data == 'exist') {
                     navigate('/register')
                 } else if (response.data != 'exist') {
                     axios.post(`${URL}/users/login`, {
-                        Email, Password
+                        email: Email, password: Password
                     }).then(response => {
                         if (response.data) {
                             setCookie('userIn', response.data.session_cookie);
