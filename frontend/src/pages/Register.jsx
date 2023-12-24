@@ -10,10 +10,10 @@ import password_icon from '../assets/password.png';
 import './Register.css';
 const Register = () => {
     const URL = import.meta.env.VITE_URL;
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [Name, setName] = useState('');
+    const [Email, setEmail] = useState('');
+    const [Password, setPassword] = useState('');
+    const [ConfirmPassword, setConfirmPassword] = useState('');
     const [eye1, setEye1] = useState(false);
     const [eye2, setEye2] = useState(false);
     const navigate = useNavigate();
@@ -26,19 +26,19 @@ const Register = () => {
     }
     const Submit = async(e) => {
         e.preventDefault();
-        let Name = name.trim();
-        let Email = email.trim();
-        let Password = password.trim();
-        let ConfirmPassword = confirmPassword.trim();
-        if (Password == ConfirmPassword && password_regex.test(Password) && email_regex.test(Email) && Name.length > 2) {
+        let name = Name.trim();
+        let email = Email.trim();
+        let password = Password.trim();
+        let confirmPassword = ConfirmPassword.trim();
+        if (password == confirmPassword && password_regex.test(password) && email_regex.test(email) && name.length > 2) {
             await axios.post(`${URL}/users/register`, {
-                email: Name, email: Email, password: Password
+                name, email, password
             }).then(response => {
                 if (response.data == 'exist') {
                     navigate('/register')
                 } else if (response.data != 'exist') {
                     axios.post(`${URL}/users/login`, {
-                        email: Email, password: Password
+                        email, password
                     }).then(response => {
                         if (response.data) {
                             setCookie('userIn', response.data.session_cookie);

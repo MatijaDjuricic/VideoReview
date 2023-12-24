@@ -11,10 +11,10 @@ const Profile = props => {
   axios.defaults.withCredentials = true;
   const URL = import.meta.env.VITE_URL;
   const [user, setUser] = useState([]);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [Name, setName] = useState();
+  const [Email, setEmail] = useState();
+  const [Password, setPassword] = useState();
+  const [ConfirmPassword, setConfirmPassword] = useState();
   const [eye1, setEye1] = useState(false);
   const [eye2, setEye2] = useState(false);
   const navigate = useNavigate();
@@ -25,15 +25,15 @@ const Profile = props => {
   }
   const Submit = async(e) => {
     e.preventDefault();
-    let Name = name.trim();
-    let Email = email.trim();
-    let Password = password.trim();
-    let ConfirmPassword = confirmPassword.trim();
-    if (Name == '' || Name === undefined) setName(user.name);
-    if (Email == '' || Email === undefined) setEmail(user.email);
-    if ((Password == ConfirmPassword) && Password !== undefined && Password != '') {
+    let name = Name.trim();
+    let email = Email.trim();
+    let password = Password.trim();
+    let confirmPassword = ConfirmPassword.trim();
+    if (name == '' || name === undefined) setName(user.name);
+    if (email == '' || email === undefined) setEmail(user.email);
+    if ((password == confirmPassword) && password !== undefined && password != '') {
         axios.patch(`${URL}/users/user/edit/${props.id}`, {
-            Name, Email, Password
+            name, email, password
         }).then(response => {
             if (response.data != 'notexist') {
                 navigate('/');

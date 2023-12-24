@@ -9,8 +9,8 @@ import password_icon from '../assets/password.png';
 import './Login.css';
 const Login = () => {
     const URL = import.meta.env.VITE_URL;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [Email, setEmail] = useState('');
+    const [Password, setPassword] = useState('');
     const [eye, setEye] = useState(false);
     const navigate = useNavigate();
     const toggleEye = e => {
@@ -19,10 +19,10 @@ const Login = () => {
     }
     const Submit = async(e) => {
         e.preventDefault();
-        let Email = email.trim();
-        let Password = password.trim();
+        let email = Email.trim();
+        let password = Password.trim();
         await axios.post(`${URL}/users/login`, {
-            email: Email, password: Password
+            email, password
         }).then(response => {
             if (response.data != 'notexist') {
                 navigate('/', {state: {id: email}});
