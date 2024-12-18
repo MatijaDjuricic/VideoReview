@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const User = require('./models/User');
 const Review = require('./models/Review');
 require('dotenv').config();
-const backendPort = process.env.BACKEND_PORT || 8080;
+const Port = process.env.PORT || 8080;
 const app = express();
 app.set('trust proxy', 1);
 app.use(express.json());
@@ -18,7 +18,7 @@ app.use(cors({
 }));
 app.use(bodyParser.urlencoded({extended: true}));
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.URI, {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to MongoDB")).catch(console.error);
@@ -110,4 +110,4 @@ app.delete('/reviews/review/delete/:id', async(req, res) => {
     const review = await Review.findByIdAndRemove(req.params.id);
     return res.json(review);
 });
-app.listen(backendPort, () => console.log(`listening on port:${backendPort}...`));
+app.listen(Port, () => console.log(`listening on port:${Port}...`));
